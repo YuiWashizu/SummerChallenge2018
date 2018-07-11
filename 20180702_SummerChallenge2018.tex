@@ -8,14 +8,17 @@
  %\usepackage[dviout]{graphicx}
 \begin{document}
 
-\part{目的}
-光には、波動性と粒子性の2重性がある。ある時は粒子のようにふるまい、ある時は波のようにふるまう。今回の実験では、日常概念での「粒子」や「波動」をそのまま当てはめることのできない光子の性質を確かめる。
+\tableofcontents
 \clearpage
 
-\part{原理}
+
+\section{目的}
+光には、波動性と粒子性の2重性がある。ある時は粒子のようにふるまい、ある時は波のようにふるまう。今回の実験では、日常概念での「粒子」や「波動」をそのまま当てはめることのできない光子の性質を確かめる。
+
+\section{原理}
 光の波動性を見る1つの実験として、干渉実験がある。以下、光の干渉の原理について述べる。
 
-\section{光とは}
+\subsection{光とは}
 電子のエネルギー状態が、高エネルギー状態から低エネルギー状態へ変化した時、このエネルーの差分を原子の外に波動エネルギーとして放出する。この波動エネルギーを電磁波・光と呼ぶ。
 位置$\bm{r}$、時間tにおける電磁波は以下の式で表される。
 \begin{itemize}
@@ -24,8 +27,8 @@
 \end{itemize}
 $\bm{E_0}, \bm{B_0}$：定数、　$\bm{k}$：波数ベクトル、　$\omega$：角振動数とする。
 
-\section{光の干渉}
-\subsection{線状光源}
+\subsection{光の干渉}
+\subsubsection{線状光源}
 直線に並んだ振幅、周波数が互いに等しいN個の光源を考える。各光源は等しい初期位相角をもっていると仮定する。ここで、j番目の光源が$r_j$離れた点で作る電場$E_j$は
 \[
 E_j = E_0 sin(\omega t - k r_j)
@@ -39,9 +42,9 @@ E_j = \frac{C_0}{r_j} sin(\omega t - k r_j)
 
 さらに、この光源を無限に並べた線状光源を考える。ここで、考えている状況は、各光源は非常に弱く、光源の数Nは極めて多く、光源間の間隔が無視できるほど小さい状況である。ここで、Dを線状光源全体の長さとすると、線状光源の微小部分$\delta y_i$個の光源を含んでいる。（ここで、光源はM個の微小部分に分けられているとする。$1 \leq i \leq M$）
 \\
-\begin{figure}[h]
+\begin{figure}[b]
 \begin{center}
-\includegraphics[width=7cm, bb = 0 0 600 350]{SummerChallenge_lineray.png}
+\includegraphics[width=6cm, bb = 0 0 600 200]{SummerChallenge_lineray.png}
 \caption{線状光源}
 \end{center}
 \end{figure}
@@ -66,7 +69,7 @@ E = C_L \int_{-D/2}^{D/2} \frac{sin(\omega t - k r)}{r} dy
 となる。ここで、$r = r(y)=\sqrt{R^2 cos^2 \theta + (Rsin \theta - y )^2}$である。
 
 
-\subsection{単スリット}
+\subsubsection{単スリット}
 まず、単スリットの場合どのように干渉が起こるかを確かめる。振幅、周波数が互いに等しい長さDの線状光源を考える。線状光源の中心からyだけ離れた光源の微小部分dyが、中心からxy平面上の角$\theta$の方向にRだけ離れた点Pに作る電場は、
 \[
 dE = \epsilon \frac{sin(\omega t - kr)}{r} dy
@@ -125,7 +128,7 @@ I(\theta) = I(\theta) (\frac{sin \beta}{\beta})^2
 
 \clearpage
 
-\subsection{2重スリット}
+\subsubsection{2重スリット}
 図のような、幅$b$、中心間隔$a$の2本の長いスリットがあるとする。スクリーン上のある点の光波に対する式を得るには、2つの電場の和になるので、
 \begin{eqnarray*}
 E &=& \frac{C_L}{R} \int_{-b/2}^{b/2} F(z) dz + \frac{C_L}{R'} \int_{a-b/2}^{a+b/2} F(z) dz \\
@@ -156,17 +159,24 @@ I(\theta) = 4I_0 (\frac{sin \beta}{\beta})^2 cos^2 \alpha
 \end{center}
 \end{figure}
 
-\clearpage
-
-
-
-
-
-
-\section{参考文献}
+\subsection{参考文献}
 \begin{itemize}
 \item 「フーリエ光学(第3版)」森北博巳（森北出版株式会社）2012年初版
 \end{itemize}
+\clearpage
 
+\subsection{光の粒子性と波動性}
+
+\section{実験装置}
+\subsection{実験のセットアップ}
+\subsection{信号発生器、NIMモジュール、MPPC、EASIROC、可動ステージ等の説明}
+\subsection{データ収集の方法}
+
+\section{データ解析}
+\subsection{MPPCで取得されるデータの解析}
+\subsection{Poisson統計}
+\subsection{干渉縞の再現}
+
+\section{まとめ}
 
 \end{document}
