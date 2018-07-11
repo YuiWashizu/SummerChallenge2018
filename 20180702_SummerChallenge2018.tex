@@ -4,7 +4,7 @@
  \usepackage{amssymb}
 \usepackage{amsmath}
  \usepackage{bm}
- \usepackage[dvipdfmx]{graphicx}
+ \usepackage[dvipdfmx]{graphicx,color}
  %\usepackage[dviout]{graphicx}
 \begin{document}
 
@@ -20,8 +20,8 @@
 電子のエネルギー状態が、高エネルギー状態から低エネルギー状態へ変化した時、このエネルーの差分を原子の外に波動エネルギーとして放出する。この波動エネルギーを電磁波・光と呼ぶ。
 位置$\bm{r}$、時間tにおける電磁波は以下の式で表される。
 \begin{itemize}
-\item 電場：$\bm{E} (\bm{r}, t) = \bm{E_0} sin (\omega t - \bm{k} \cdot \bm{r} ) $
-\item 磁場：$\bm{B} (\bm{r}, t) = \bm{B_0} sin (\omega t - \bm{k} \cdot \bm{r} ) $
+\item 電場：$\bm{E} (\bm{r}, t) = \bm{E_0} \sin (\omega t - \bm{k} \cdot \bm{r} ) $
+\item 磁場：$\bm{B} (\bm{r}, t) = \bm{B_0} \sin (\omega t - \bm{k} \cdot \bm{r} ) $
 \end{itemize}
 $\bm{E_0}, \bm{B_0}$：定数、　$\bm{k}$：波数ベクトル、　$\omega$：角振動数とする。
 
@@ -30,7 +30,7 @@ $\bm{E_0}, \bm{B_0}$：定数、　$\bm{k}$：波数ベクトル、　$\omega$�
 \subsubsection{線状光源}
 直線に並んだ振幅、周波数が互いに等しいN個の光源を考える。各光源は等しい初期位相角をもっていると仮定する。ここで、j番目の光源が$r_j$離れた点で作る電場$E_j$は
 \[
-E_j = E_0 sin(\omega t - k r_j)
+E_j = E_0 \sin(\omega t - k r_j)
 \]
 と書ける。今、$E_0 \varpropto 1/{r_j}$なので、定数$C_0$を用いて
 \[
@@ -55,7 +55,7 @@ E_i = \frac{C_0}{r_i} \sin(\omega t- k r_i ) \frac{\delta y_i N}{D}
 \]
 となる。ただし、$\delta y_i$は微小であり、この微小範囲内の各光源からPまで距離は一定であるとする。さらに一定値の$C_L$を
 \[
-C_L ≡ \frac{1}{D}  \lim_{N \to \infty} (C_0 N)
+C_L = \frac{1}{D}  \lim_{N \to \infty} (C_0 N)
 \]
 と定義できる。M個の全部分によるPでの電場は、
 \[
@@ -75,7 +75,7 @@ dE = \epsilon \frac{\sin(\omega t - kr)}{r} dy
 \]
 $r(y)$を$y$でテイラー展開すると、
 \begin{eqnarray*}
-r &=&r(0) + \frac{\partial r(0)}{\partial y} y + \frac{1}{2!} \frac{\partial^2 r(0)}{\partial y^2} y^2 +  …\\
+r &=&r(0) + \frac{\partial r(0)}{\partial y} y + \frac{1}{2!} \frac{\partial^2 r(0)}{\partial y^2} y^2 + \cdots \\
 &=&R - y\sin\theta + \frac{y^2}{2R} \cos^2 \theta
 \end{eqnarray*}
 となる。いま、$R \gg y$なので、第3項以降は無視できる。
