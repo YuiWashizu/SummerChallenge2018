@@ -180,12 +180,32 @@ I(\theta) = 4I_0 (\frac{\sin \beta}{\beta})^2 \cos^2 \alpha
 
 \subsubsection{ROOTとは}
 ROOTとはCERNが開発したデータ解析のためのフレームワークであり、特によく使われる目的としてはヒストグラム・グラフを描く、任意の関数でフィットする、大量のデータを処理するといったものがあります。物理学実験では、皆さんがこれまで触ったことのあるものに比べて大量のデータを扱うため、例えばエクセルではそれらに何らかの処理をしてプロットするといった解析はとても難しくなります。そのため、プログラミングによる解析を行えるようになる必要がある。言語としては主にC++で動作し、pythonで書くこともできるが自分がよく知らないため説明はC++のみとなる。
+ROOTをインストールもしくはROOTがインストールされているマシンにSSH接続して、ROOTを使用できる環境が構築できていることを仮定して、以下で使い方について説明する。
+
+\subsubsection{ROOTの起動方法}
+ROOTを起動するためには単にコマンドラインでrootと入力するだけでよい。しかし、rootと入力するだけでは毎回図\ref{ROOT_logo}が表示され、邪魔になるので普段は表示しないようにしたほうがよい。
 \begin{figure}[h]
 \begin{center}
 \includegraphics[width=8cm]{ROOT_logo.png}
 \caption{ROOTのロゴ}
+\label{ROOT_logo}
 \end{center}
 \end{figure}
+表示させないためには起動させる際にオプションで-lをつければよい。
+\begin{table}[hbtp]
+  \caption{ROOT起動時のオプションの例}
+  \centering
+  \begin{tabular}{lcr}
+    \hline
+    オプション  & 意味 \\
+    \hline \hline
+      -l:  & 起動時にロゴを表示しない  \\
+      -b:  & ヒストグラムやグラフのグラフィックを描画しない \\
+      -q:  & スクリプトファイルを実行後自動でROOTが終了する \\
+    \hline
+  \end{tabular}
+\end{table}
+ROOTを終了したいときには、.qと入力すればROOTを終了させることができる。
 
 \subsubsection{ヒストグラムの描き方}
 
