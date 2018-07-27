@@ -1,10 +1,10 @@
 void MPPCpeFit(){
-  for(int filenum=63;filenum < 96;filenum++){
+  for(int filenum=67;filenum < 68;filenum++){
   const int fitch = 30;
-  const int pedadc = 810;
-  const int fitpenumber = 3;
-  const int fitpeadc = 1080;
-  const int fitpemax = 5;
+  const int pedadc = 800;
+  const int fitpenumber = 4;
+  const int fitpeadc = 1170;
+  const int fitpemax = 7;
   const int daitaifitpeevent = 45;
   auto f1 = TFile::Open(Form("sc00%d.root",filenum));
   auto tr = dynamic_cast<TTree*>(f1->Get("tree"));
@@ -16,14 +16,14 @@ void MPPCpeFit(){
     tr->GetEntry(ev);
     histforfit->Fill(adc1[fitch]);
   }
-  const int fitwidth = 15;
+  const int fitwidth = 20;
   const int daitainosigma = 7;
   const int fitloopnumber = fitpemax-fitpenumber+1;
   TF1* fitgaus[fitloopnumber];
   int fitzakkuripetoadc = (fitpeadc-pedadc)/fitpenumber;
   ofstream ofs(Form("gain%d.txt",filenum));
   //ofstream ofs(Form("gainl%d.txt",fitch));
-  ofs << 0 << " " << "\t" << 15000 << " " << "\t" << pedadc << " " << "\t" << 7 << endl;
+  //ofs << 0 << " " << "\t" << 50 << " " << "\t" << pedadc << " " << "\t" << 7 << endl;
   for(int i=0;i<fitloopnumber;i++){
     fitgaus[i] = new TF1("fitgaus","[0]*TMath::Gaus(x,[1],[2])",0,4000);
     fitgaus[i]->SetParameter(0,daitaifitpeevent);

@@ -11,7 +11,11 @@ void kanshow(){
   //cout << a << " " << bb << " " << cc << endl;
   b.push_back(bb);
   c.push_back(cc);
-  x.push_back(filenum);
+  if(filenum<72){
+  x.push_back(125*(filenum-63));
+  }
+  if(filenum>71){
+  x.push_back(125*(71-filenum));
   cout << filenum << " " << bb << endl;
   }
   //cout << "test3" << endl;
@@ -22,4 +26,5 @@ void kanshow(){
  //cout << c[0] << endl;
  TGraphErrors *tg = new TGraphErrors(x.size(),xpointer,bpointer,0,cpointer);
  tg -> Draw("AP");
+}
 }
