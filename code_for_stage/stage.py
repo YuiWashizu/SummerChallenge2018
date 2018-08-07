@@ -8,7 +8,7 @@ print('open serial port')
 
 ser = serial.Serial(port='/dev/ttyS0', baudrate=9600, timeout=1)
 
-def senCommand(ser, data):
+def sendCommand(ser, data):
     ser.write((data+'\r').encode())
     a = ser.read(100)
     return a
