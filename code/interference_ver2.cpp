@@ -1,22 +1,22 @@
-#include <TFile.h>
-#include <TH1.h>
-#include <TCanvas.h>
-#include <stdio.h>
-#include <math.h>
-#include <cmath>
-#include <vector>
-#include <iostream>
-#include <fstream>
-#include <sys/stat.h>
-#include <string>
-#include <sstream>
-#include <TF1.h>
-#include <TTree.h>
-#include <TStyle.h>
-#include <TText.h>
-#include <unistd.h>
+ #include <TFile.h>
+ #include <TH1.h>
+ #include <TCanvas.h>
+ #include <stdio.h>
+ #include <math.h>
+ #include <cmath>
+ #include <vector>
+ #include <iostream>
+ #include <fstream>
+ #include <sys/stat.h>
+ #include <string>
+ #include <sstream>
+ #include <TF1.h>
+ #include <TTree.h>
+ #include <TStyle.h>
+ #include <TText.h>
+ #include <unistd.h>
 
-using namespace std;
+ using namespace std;
 
   const int ch = 30;
   const int pedestal_adc = 805;
@@ -31,7 +31,6 @@ using namespace std;
   int last_file_number;
   string output_filename;
   int mode;
-
 
  void interference_ver2(){
   vector<double> x_pos;
@@ -57,6 +56,7 @@ using namespace std;
   cout<<"please type 1 or 2"<<endl;
   cin>>mode;
 
+  //make output file
   TFile * output_file = new TFile(output_filename.c_str(),"RECREATE");
 
   //each position fitting
@@ -74,6 +74,7 @@ using namespace std;
    adc_hist->Draw();
    adc_hist->Write();
 
+   //fit adc peak
    vector<double> fit_adc_mean;
    vector<double> fit_adc_sigma;
    vector<double> gaus_x;
@@ -88,6 +89,7 @@ using namespace std;
    gaus_x.push_back(static_cast<double>(j));
   }
 
+   //calibration adc to pe
    TCanvas * c1 = new TCanvas(Form("line_fit%d",filenumber),Form("line_fit%d",filenumber),1600,900);
    TGraphErrors* g1 = new TGraphErrors(peak_number + 1,&(gaus_x.at(0)),&(fit_adc_mean.at(0)),0,&(fit_adc_sigma.at(0)));
    TF1 * f1 = new TF1("f1","[0] + [1] * x",-1,peak_number + 1);
@@ -100,20 +102,21 @@ using namespace std;
    g1->Draw("AP");
    c1->Write();
    delete c1;
-
    int Entries = 0;
    tf1->cd();
    TH1D * pe_hist = new TH1D(Form("pe_hist%d",filenumber),Form("pe_hist%d",filenumber),30,-0.5,29.5);
    TH1D * pe_hist_sig = new TH1D(Form("pe_hist_sig%d",filenumber),Form("pe_hist_sig%d",filenumber),30,-0.5,29.5);
    for(int event = 0;event < tr1->GetEntries();event++){
     tr1->GetEntry(event);
-    pe_hist->Fill((adc[ch] - p0)/p1);
-    if((adc[ch] - p0)/p1 > 0.5){
+    double adc_to_pe = (adc[ch] - p0)/p1;
+    pe_hist->Fill(adc_to_pe);
+    if(adc_to_pe > 0.5){
    	 Entries++;
-   	 pe_hist_sig->Fill((adc[ch] - p0)/p1);
+   	 pe_hist_sig->Fill(adc_to pe);
     }
    }
    
+   //plot pe histgram
    output_file->cd();
    TCanvas * c2 = new TCanvas(Form("pe_hist%d",filenumber),Form("pe_hist%d",filenumber),1600,900);
    x_pos.push_back(0.002*(first_position + stage_step*(filenumber - begin_file_number)));
@@ -123,11 +126,13 @@ using namespace std;
    pe_hist->SetFillColor(kBlue);
    pe_hist->Draw();
    
+   //mode1 = poisson fit
    if(mode == 1){
     pe_hist->Fit("poisson","","",0,20);
     pe_mean.push_back(fit_poisson->GetParameter(1));
     pe_mean_err.push_back(fit_poisson->GetParError(1));
    }else{
+    //mode2 = Entries > 0.5
     pe_mean.push_back(Entries);
     pe_mean_err.push_back(TMath::Sqrt(Entries));
     pe_hist_sig->SetFillColor(kRed);
@@ -145,6 +150,7 @@ using namespace std;
    delete fit_poisson;
   }
 
+  //plot interference
   double * xpointer = &(x_pos.at(0));
   double * ypointer = &(pe_mean.at(0));
   double * y_errpointer = &(pe_mean_err.at(0));
