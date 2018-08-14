@@ -1,12 +1,14 @@
 \documentclass[10pt,a4j]{jarticle}
 %\documentclass[10pt]{ujarticle}
  \usepackage[top=30truemm, bottom=30truemm, left=25truemm, right=25truemm]{geometry}
+ \usepackage{listings}%
  \usepackage{ascmac}
  \usepackage{amssymb}
 \usepackage{amsmath}
  \usepackage{bm}
+ \usepackage{url}%
  \usepackage[dvipdfmx]{graphicx,color}
- %\usepackage[dviout]{graphicx}
+  %\usepackage[dviout]{graphicx}
 \begin{document}
 
 \tableofcontents
@@ -180,16 +182,16 @@ I(\theta) = 4I_0 (\frac{\sin \beta}{\beta})^2 \cos^2 \alpha
 前章ですでに述べたように、MPPCで取得されるデータはEASIROCによってtree形式で保存される。今回はこのデータをROOTを用いて解析を行う。ここから解析に必要なROOTの知識を簡単に説明するが、すべてを説明することはできないためわからない部分は各自調べるかTAに質問したりするようにしてください。
 
 \subsubsection{ROOTとは}
-ROOTとはCERNが開発したデータ解析のためのフレームワークであり、特によく使われる目的としてはヒストグラム・グラフを描く、任意の関数でフィットする、大量のデータを処理するといったものがあります。物理学実験では、皆さんがこれまで触ったことのあるものに比べて大量のデータを扱うため、例えばエクセルではそれらに何らかの処理をしてプロットするといった解析はとても難しくなります。そのため、プログラミングによる解析を行えるようになる必要がある。言語としては主にC++で動作し、pythonで書くこともできるが自分がよく知らないため説明はC++のみとなる。また、ROOTで行えることは膨大であるため、できる限り今回必要となる最低限について説明するつもりだがわからない部分も出てくると思うので、それに関してはTAに聞いたり調べたりしてみてください。
+ROOTとはCERNが開発したデータ解析のためのフレームワークであり、特によく使われる目的としてはヒストグラム・グラフを描く、任意の関数でフィットする、大量のデータを処理するといったものがあります。物理学実験では大量のデータを扱うため、例えばエクセルのようなものではそれらのデータをプロットしたり複雑な解析を行うことは難しくなります。そのため、プログラミングによる解析を行えるようになる必要がある。言語としては主にC++で動作し、pythonで書くこともできるが自分がよく知らないため説明はC++のみとなる。また、ROOTで行えることは膨大であるため、できる限り今回必要となる最低限について説明するつもりだがわからない部分も出てくると思うので、それに関してはTAに聞いたり調べたりしてみてください。
 ROOTをインストールもしくはROOTがインストールされているマシンにSSH接続して、ROOTを使用できる環境が構築できていることを仮定して、以下で使い方について説明する。
 
 \subsubsection{ROOTの起動方法}
-ROOTを起動するためには単にコマンドラインでrootと入力するだけでよい。しかし、rootと入力するだけでは毎回図\ref{ROOT_logo}が表示され、邪魔になるので普段は表示しないようにしたほうがよい。
+ROOTを起動するためには単にコマンドラインでrootと入力するだけでよい。しかし、rootと入力するだけでは毎回図\ref{fig:ROOT_logo}が表示され、邪魔になるので普段は表示しないようにしたほうがよい。
 \begin{figure}[h]
 \begin{center}
 \includegraphics[width=8cm]{ROOT_logo.png}
 \caption{ROOTのロゴ}
-\label{ROOT_logo}
+\label{fig:ROOT_logo}
 \end{center}
 \end{figure}
 表示させないためには起動させる際にオプションで-lをつければよい。
@@ -209,26 +211,221 @@ ROOTを起動するためには単にコマンドラインでrootと入力する
 ROOTを終了したいときには、.qと入力すればROOTを終了させることができる。
 
 \subsubsection{ヒストグラムの描き方}
-rootを起動する際に、引数にrootファイルを指定することでrootの起動と同時にROOTファイルを開くことができます。例えば、今回測定結果をexample.rootという名前で保存しているとした場合、root example.rootとコマンドラインから入力することで測定データに簡単にアクセスすることができます。
+rootを起動する際に、引数にrootファイルを指定することでrootの起動と同時にROOTファイルを開くことができます。例えば、今回測定結果をexample.rootという名前で保存しているとした場合、root example.rootとコマンドラインから入力することで測定データに簡単にアクセスすることができます。\ref{fig:open_ROOT}
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=8cm]{SummerChallenge_open_root.png}
+\caption{rootファイルを開く}
+\label{fig:open_ROOT}
+\end{center}
+\end{figure}
 
-example.root内にさらにtreeという名前でtreeを作っている場合、tree-$>$''コマンド''という書き方をすることできます。それにより、簡単に測定データを確認したりヒストグラムを描くことができます。コマンドとしては例えば、tree-$>$Scan()やtree-$>$Draw()があり、Drawはデータの数や種類、変数の方を確認でき、Scanは1つ1つのデータを実際に確認することができます。
-%ここに実際にそのコマンドを使った例の画像を入れる予定
+example.root内にさらにtreeという名前でtreeを作っている場合、tree-$>$''コマンド''という書き方をすることできます。それにより、簡単に測定データを確認したりヒストグラムを描くことができます。コマンドとしては例えば、tree-$>$Print()やtree-$>$Scan()があり、Printはデータの数や種類、変数の方を確認でき、Scanは1つ1つのデータを実際に確認することができます。
+\begin{figure}[htbp]
+\begin{center}
+  \begin{tabular}{c}
 
-今回treeの中身をDrawやScanで確認すると、いくつかのBranchがあると思う。そのうち今回ADCというBranchのヒストグラムを描きたい場合、tree-$>$Draw(''ADC'')と打つだけでヒストグラムを描くことができる。
-%ここに実際にヒストグラムの画像を入れる予定
+    \begin{minipage}{0.5\hsize}
+      \begin{center}
+        \includegraphics[clip, width=60mm]{SummerChallenge_tree_print.png}
+        \hspace{1.6cm} (a)tree-$>$Print()の実行例
+      \end{center}
+    \end{minipage}
 
-ヒストグラムを書くときに、ただそのまま書くだけでなく様々な条件をかけることもできる。例えば、tree-$>$Draw(''ADC*2'')とすれば、ADCの値を2倍したヒストグラムを描くことができ、tree-$>$Draw(''ADC'',''ADC$>$900'')とすればADCが900より大きいイベントのみ描くことができます。この条件には、ほかのBranchを用いることもできtree-$>$Draw(''ADC'',''Event $>$ 2000 \&\&Event $<$ 10000'')とすれば2000$<$Event$<$10000のみのヒストグラムを描くことができます。ただし、ある程度複雑な条件になってくるとこの書き方をするのは難しくなってくるので、後述するマクロを書いてヒストグラムを描くことをお勧めします。
+    \begin{minipage}{0.5\hsize}
+      \begin{center}
+        \includegraphics[clip, width=60mm]{SummerChallenge_tree_scan.png}
+        \hspace{1.6cm} (b)tree-$>$Scan()の実行例
+      \end{center}
+    \end{minipage}
+  \end{tabular}
+  \end{center}
+\end{figure}
+
+今回treeの中身をDrawやScanで確認すると、いくつかのBranchがあると思う\footnote{Branchとは言葉通り枝のようなもので、1つのEntryに対して様々なデータを詰め込むことができる。}。そのうち今回adcというBranchのヒストグラムを描きたい場合、tree-$>$Draw(''adc'')と打つだけでヒストグラムを描くことができる。\footnote{今回、EASIROCでは32chのデータが配列としてadcのBranchに入っており、そのうちMPPCがつながっているのは30chのみなので、adc[30]のみをDrawすることで測定データのヒストグラムを描ける}
+\begin{figure}[htbp]
+\begin{center}
+  \begin{tabular}{c}
+
+    \begin{minipage}{0.5\hsize}
+      \begin{center}
+        \includegraphics[clip, width=60mm]{SummerChallenge_tree_draw_adc.png}
+        \hspace{1.6cm} (a)tree-$>$Draw(''adc'')の実行例
+      \end{center}
+    \end{minipage}
+
+    \begin{minipage}{0.5\hsize}
+      \begin{center}
+        \includegraphics[clip, width=60mm]{SummerChallenge_tree_draw_adc30.png}
+        \hspace{1.6cm} (b)tree-$>$Draw(''adc[30]'')の実行例
+      \end{center}
+    \end{minipage}
+  \end{tabular}
+  \label{fig:tree_draw}
+  \end{center}
+\end{figure}
+
+ヒストグラムを書くときに、ただそのまま書くだけでなく様々な条件をかけることもできる。例えば、tree-$>$Draw(''adc*2'')とすれば、adcの値を2倍したヒストグラムを描くことができ、tree-$>$Draw(''adc'',''adc$>$900'')とすればadcが900より大きいイベントのみ描くことができます。この条件には、ほかのBranchを用いることもできtree-$>$Draw(''adc',''adc\_l $>$ 1000 \&adc\_l $<$ 3000'')とすれば200$<$adc\_l$<$3000のみのヒストグラムを描くことができます。ただし、ある程度複雑な条件になってくるとこの書き方をするのは難しくなってくるので、後述するマクロを書いてヒストグラムを描くことをお勧めします。
 
 \subsubsection{マクロの書き方}
+簡単なマクロはコマンドラインに書いてヒストグラムを描くときと同じものを描くだけでよい。ただし、rootファイルを読み込む際には必要な手順があるので例としてそれを示す。
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
+void macro(){
+	TFile *file = new TFile("example.root");
+	TH1D *h1 = (TH1D*)file->Get("adc");
+	h1->Draw();
+}
+ \end{lstlisting}
+
+データの解析には基本的にはROOT固有の知識はそれほど必要ではなく、c++の知識があれば充分であるため深くは説明しない。
+
+もう一つ必要な知識として、詳しい解析を行う際にはBranchのデータをヒストグラムとしてではなく値として取り出す必要がある。そのためこれも簡単にではあるが、値としての取り出し方を説明する。
+
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
+void macro(){
+    TFile *file = new TFile(inputfilename, "read"); 
+    TTree *tree = (TTree*)file->Get("tree");
+ 
+    Double_t adc[32]
+    tree->SetBranchAddress("adc", &adc);
+ 
+    const Int_t N = tin->GetEntries();
+    for (Int_t ientry = 0; ientry < N; ientry++) {
+     tree->GetEntry(ientry);    
+     cout<<ientry<<''   ''<<adc[30]<<endl;
+   }
+}
+ \end{lstlisting}
+
+tree-$>$GetEntry(ientry)とすることで、ientry番目のイベントのadcを読み込んでおり、それをfor文で全イベント回すことで全データを読み込んでいる。今回のマクロではcoutで出力しているだけだが、その値をvectorや配列に詰めることで解析に用いることができる。
+
+コマンドラインによる解析の仕方も一応説明しているが、測定直後にデータを簡単に確認したいといった場合を除いてはマクロを用いればよい。また、データを確認する場合でもTBrowser\footnote{ROOTを起動した後、TBrowser tbと入力することでrootファイルの中身をヒストグラムとして簡単に見ることができる}が便利であるため、あまり使用頻度は高くないと思われる。
 
 \subsubsection{ヒストグラムのフィット}
+ROOTにはあらかじめガウス分布やポアソン分布などの様々な関数が用意されており、それらをヒストグラムのフィットを行う際に利用できる。例えばガウス分布でフィットする際には、htemp-$>$Fit(''gaus'')とすればよい。\footnote{htempの部分はその時のヒストグラムの名前に応じて適宜変える}コマンドラインで行った場合にはコマンドラインにfitの結果が出力される。
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=8cm]{SummerChallenge_fit_gaus.png}
+\caption{フィットの結果}
+\label{fig:fit_gaus}
+\end{center}
+\end{figure}
 
-%\subsubsection{グラフの描き方}
+ガウス分布の場合は、$(gaus)=(Constant)\times　exp(-\frac{(x-(Mean))^2}{2(Sigma)^2})$で定義されている。それぞれの出力されるパラメータは関数によって異なるため、ほかの関数を用いる際は一度確認しておくとよい。
+また、htemp-$>$Fit(''gaus'','''','''',min,max)とすることでフィットする範囲を制限することができる。
 
+あらかじめ定義されている関数以外の関数を用いたい場合は自分で定義することができる。例えば直線でフィットしたい場合には、
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
+TF1 *f1 = new TF1(''f1'',''[0] + [1] * x'',min,max);
+ \end{lstlisting}
+とすることでまず直線の関数を定義することができる。この関数の名前はf1になっているので、あとは先ほどガウス分布でフィットしたときと同様に、
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
+htemp->Fit(''f1'','''','''',min,max);
+ \end{lstlisting}
+とすればよい。
 
+フィットする際にある程度のパラメータを指定したい場合がある。その際にはf1->SetParameter(0,5)とすれば0番目のパラメータの初期値を5に設定でき、f1->SetParameters(5,10)とすればまとめて複数のパラメータの初期値を設定できる。
+
+マクロで行う場合には基本的には同じだが、フィットした結果をマクロ内で用いたい場合は値として取り出す必要がある。
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
+Double_t p0 = f1->GetParameter(0);
+ \end{lstlisting}
+とすると、p0にフィットした後の0番目のパラメータの値を代入することができる。
+
+\subsubsection{グラフの描き方}
+基本的な使い方として、テキストファイルからグラフを描くやり方と配列やvector\footnote{vectorが何かわからない場合はc++の勉強が先に必要なため、c++ vector等で検索して使い方を勉強したほうがよいでしょう}を用いる方法がある。まずはテキストファイルでのグラフの書き方から説明する。
+
+例としてdata.datというファイルに
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
+1.00 3936
+0.50 3007
+0.10 2249
+-0.10 1836
+-0.50 1097
+-1.00 146
+ \end{lstlisting}
+ と書かれている場合、簡単にグラフを描くことができ
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
+TGraph *tg1 = new TGraph(''data.dat'');
+tg1->Draw(''AP'');
+ \end{lstlisting}
+とするだけでグラフを描くことができる。ただし、この方法を用いるためには結果をまずdatファイルとして出力する必要があるため、あまり使うことはないだろう。
+
+配列やvectorを用いる場合、まずは配列やvectorにデータを詰める必要があり、その部分は省略する。すでに値が詰まっていると仮定すると、配列の場合は
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
+TGraph *tg1 = new TGraph(6,x,y);
+tg1->Draw(''AP'');
+ \end{lstlisting}
+とすると、6個のデータを含むグラフを描くことができる。しかし、測定データによってグラフが何点あるかは異なる場合もあり、vectorを用いたほうが様々な場合に柔軟に用いることができ便利である。
+
+vectorを用いた場合は
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
+TGraph *tg1 = new TGraph(x.size(),&(x.at(0)),&(y.at(0)));
+tg1->Draw(''AP'');
+ \end{lstlisting}
+c++の知識がある人は、これを見てやってることは同じだとわかると思う。
+
+また、グラフにエラーバーをつけたい場合も多いと思う。その場合はTGraphではなくTGraphErrorsを用いればよい。使い方はほとんど同じで、
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
+TGraph *tg1 = new TGraph(6,x,x_error,y,y_error);
+tg1->Draw(''AP'');
+ \end{lstlisting}
+ の順番に引数がなっており、その通りにTGraphの時と同様に配列やvectorで与えればよい。
+
+最後にグラフのフィットについてであるが、ヒストグラムの場合と全く同じであり例えば直線でフィットしたい場合には
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
+TF1 *f1 = new TF1(''f1'',''[0] + [1] * x'',min,max);
+tg1->Fit(''f1'','''','''',min,max);
+ \end{lstlisting}
+とすればグラフを直線でフィットすることができる。
+
+\subsubsection{結果の保存}
+コマンドラインで結果のヒストグラムやグラフを保存する場合には、左上のFileからSave Asを選ぶと名前を付けて保存することができる。マクロで実行している場合には、ヒストグラムやグラフを描く前に
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
+TCanvas *c1 = new TCanvas(''c1'',''c1'',1600,900);
+ \end{lstlisting}
+としてキャンバスを作っておき、ヒスとグラムやグラフをDrawした後に
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
+c1->SaveAs(''save name'');
+ \end{lstlisting}
+とすることで保存することができる。保存する際にきれいにヒストグラムやグラフを整えた後、保存したい人も多いと思う。rootはヒストグラムやグラフそれぞれに様々な修飾等が存在し、それをここで説明しているときりがないため最後にそれらが書かれているリンクを載せておく。
+
+%導出的なことをもう少し書く
 \subsection{Poisson統計}
+Poisson分布とはめったに起こらない事象を大量に測定した場合にこの分布に従うことが多い。式で表すと、
+\begin{equation}
+P(n)=\frac{\lambda^n e^{-\lambda}}{n!}
+\end{equation}
+で、これは平均$\lambda$起こる事象がn回起こるときの確率を表す。今回の実験の場合はそれぞれの測定での光子数の分布はPoisson分布に従うと思われる。
+
+$\lambda$が大きい場合はPoison分布はGauss分布に従う。今回の実験の場合では、それぞれの光子数に対応するピークはGauss分布に従うと思われる。
+
+%画像を追加する
 \subsection{干渉縞の再現}
+今回の測定データは最初adcの値として保存されており、この値自体に物理的な意味はない。そのため、まずはこの値から光子数に変換する必要がある。やり方としてはそれぞれのピークが光子数に対応しているため、それぞれをガウス分布でフィットして中心値を求める。そのadc値と光子数の関係を直線近似することで横軸をadcから光子数に変換することができる。
+
+そのあと、変換した後のヒストグラムからMPPCの位置ごとの平均光子数を求めてプロットすることで干渉縞を再現することができる。平均光子数の求め方は様々なやり方があるが、ぜひいろいろ考えてもらいたい。
 
 \section{まとめ}
+今回説明できたのはごく基本的な部分のみであり、今回の実験の解析についてもこれ以上の知識が必要になることがあると思う。c++の知識でわからないことがあれば
+
+\url{http://www7b.biglobe.ne.jp/~robe/cpphtml/}
+の第1部を見ればある程度の情報はのっていると思われる。もし、これにのっていない知識が必要になれば別途調べるか質問してください。
+
+ROOTについての情報は基本的なものは
+
+\url{http://www-ppl.s.chiba-u.jp/~hiroshi/ref/ROOT_text.pdf}
+
+\url{https://www.quark.kj.yamagata-u.ac.jp/~miyachi/ROOT/root.pdf}
+
+、途中で話した修飾については
+
+\url{http://atlas.kek.jp/comp/ROOT-commands.html}　
+
+を見ればある程度一覧になっている。もし、そこにのっていない知識が必要になったときは別途調べるか、
+
+\url{https://root.cern.ch/guides/users-guide}
+
+のUser's Guideを見ればわかると思うが、User's Guideは英語の上膨大であるため、適宜調べるのがよいと思う。
 
 \end{document}
