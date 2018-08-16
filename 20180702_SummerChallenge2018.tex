@@ -194,9 +194,74 @@ I(\theta) = 4I_0 (\frac{\sin \beta}{\beta})^2 \cos^2 \alpha
 
 
 \section{実験装置}
-\subsection{実験のセットアップ}
-\subsection{信号発生器、NIMモジュール、MPPC、EASIROC、可動ステージ等の説明}
+用いる実験装置は、光検出デバイスMPPC、MPPC読み出しモジュールEASIROC、暗箱、光学機器、スリット、しぼり、LEDです。光学機器を図のように並べ、光の干渉を起こします。各デバイスの位置や距離によって干渉の見え方が変わりますが、これは実際に物を置いていろいろ試してみましょう。以下では、光検出器とその読み出しについて説明します。
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=12cm]{setup.PDF}
+\end{center}
+\caption{セットアップ}
+\end{figure}
+\subsection{MPPC}
+MPPC(Micro Pixel Photon Counter)はAvalamche Photo Diode(APD)が多数配列された光検出器です。APDは半導体でできています。P型とN型、異なるドープ型の半導体にある向きで電圧をかけると、キャリアの少ない空乏層ができます。ここに光子が入射すると、光電効果で電子をはじき出します。電子は印加電圧によってエネルギーを持ち、さらに周囲の原子殻内電子をはじき出し、雪崩(Avalanche)的に電子を倍増します。印加電圧によって様々な倍増モードがありますが、MPPC内のAPDでは、十分な印加電圧をかけることで入射光子数によらない出力電流を得ます(ガイガーモード)。このガイガーモードAPDが多数配列することにより、我々は光子が入射したAPDのチャンネル数だけを数えることで、(pile upはあるものの)光子数をデジタルに数えることができます。
+\begin{figure}[h]
+\begin{minipage}[t]{0.33\hsize}
+\begin{center}
+\includegraphics[width=4cm]{mppc.jpg}
+\end{center}
+\caption{MPPC}
+\end{minipage}
+\begin{minipage}[t]{0.33\hsize}
+\begin{center}
+\includegraphics[width=4cm]{APDstructure.PNG}
+\end{center}
+\caption{APD}
+\end{minipage}
+\begin{minipage}[t]{0.33\hsize}
+\begin{center}
+\includegraphics[width=4cm]{QuenchingArray.PNG}
+\end{center}
+\caption{MPPCはAPDを並列に並べたもの}
+\end{minipage}
+\end{figure}
+浜松ホトニクスのハンドブックも参考にしてください。\cite{hamamatsu}
+\subsection{EASIROC}
+EASIROCモジュールは、書き換え不可能な集積回路(ASIC)であるEASIROCチップと、EASIROCチップ制御用の書き換え可能な集積回路(FPGA)であるArtix7が搭載された、MPPCの(多チャンネネル)読み出しモジュールです。今回は1チャンネルしか使いませんし、FPGAのfirmwareの書き換えも(おそらく)ありませんので、ここでは、EASIROCチップの回路の概要と、アナログな出力波形について見ることにします。\\
+EASIROCチップは、Pre-Amp,Shaper,Discriminator,Capacitorからなります。Pre-Amp,Slow Shaperを通った信号電圧をCapacitorに保存し、Trigger信号が入力されたときに電圧をholdし、ADC(Analog Digital Converter)でデジタル情報に変換します。
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=12cm]{EASIROCCircuitDiagram.PNG}
+\end{center}
+\caption{EASIROC回路概略}
+\end{figure}
+各デバイスを通った信号の出力波形は、EASIROCモジュールのProbe出力を観察するとわかります。Fast ShaperはSelf Trigger用なので、今回は(おそらく)使いません。Trigger信号に合わせてShaperの波高の一番高いところが読み出されているのがわかります。Trigger信号とShaperの立ち上がりがきちんと合うかどうかはケーブルの長さやDelayモジュールによって操作できます。
+\begin{figure}[h]
+\begin{minipage}[t]{0.25\hsize}
+\begin{center}
+\includegraphics[width=3cm]{preamp.BMP}
+\end{center}
+\caption{}
+\end{minipage}
+\begin{minipage}[t]{0.25\hsize}
+\begin{center}
+\includegraphics[width=3cm]{fastshaper.BMP}
+\end{center}
+\caption{}
+\end{minipage}
+\begin{minipage}[t]{0.25\hsize}
+\begin{center}
+\includegraphics[width=3cm]{slowshaper.BMP}
+\end{center}
+\caption{}
+\end{minipage}
+\begin{minipage}[t]{0.25\hsize}
+\begin{center}
+\includegraphics[width=3cm]{slowshaperhold.BMP}
+\end{center}
+\caption{}
+\end{minipage}
+\end{figure}
 \subsection{データ収集の方法}
+マニュアル参照
 
 \section{データ解析}
 \subsection{MPPCで取得されるデータの解析}
@@ -466,3 +531,7 @@ ROOTについての情報は基本的なものは
 また、あまり全てを書きすぎると参加している皆さんが考えることがなくなってしまうため、あえて説明をしていない部分もある。なので、この資料を読んでわからないことがあれば遠慮せずにどんどん聞いてください。
 
 \end{document}
+\begin{thebibliography}{9}
+\bibitem{hamamatsu}
+https://www.hamamatsu.com/resources/pdf/ssd/03\_handbook.pdf
+\end{thebibliography}
