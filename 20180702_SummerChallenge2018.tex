@@ -1,5 +1,5 @@
-%\documentclass[10pt,a4j]{jarticle}
-\documentclass[10pt]{ujarticle}
+\documentclass[10pt,a4j]{jarticle}
+%\documentclass[10pt]{ujarticle}
  \usepackage[top=30truemm, bottom=30truemm, left=25truemm, right=25truemm]{geometry}
  \usepackage{listings}%
  \usepackage{ascmac}
@@ -332,7 +332,7 @@ ROOTにはあらかじめガウス分布やポアソン分布などの様々な�
 \end{center}
 \end{figure}
 
-ガウス分布の場合は、$(gaus)=(Constant)\times　exp(-\frac{(x-(Mean))^2}{2(Sigma)^2})$で定義されている。それぞれの出力されるパラメータは関数によって異なるため、ほかの関数を用いる際は一度確認しておくとよい。
+ガウス分布の場合は、$(gaus)=(Constant)\times$exp$(-\frac{(x-(Mean))^2}{2(Sigma)^2})$で定義されている。それぞれの出力されるパラメータは関数によって異なるため、ほかの関数を用いる際は一度確認しておくとよい。
 また、htemp-$>$Fit(''gaus'','''','''',min,max)とすることでフィットする範囲を制限することができる。
 
 あらかじめ定義されている関数以外の関数を用いたい場合は自分で定義することができる。例えば直線でフィットしたい場合には、
