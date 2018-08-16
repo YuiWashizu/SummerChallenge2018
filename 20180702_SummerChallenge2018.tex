@@ -7,6 +7,7 @@
 \usepackage{amsmath}
  \usepackage{bm}
  \usepackage{url}%
+ \usepackage[dvipdfmx]{hyperref}
  \usepackage[dvipdfmx]{graphicx,color}
   %\usepackage[dviout]{graphicx}
 \begin{document}
@@ -203,7 +204,7 @@ I(\theta) = 4I_0 (\frac{\sin \beta}{\beta})^2 \cos^2 \alpha
 前章ですでに述べたように、MPPCで取得されるデータはEASIROCによってtree形式で保存される。今回はこのデータをROOTを用いて解析を行う。ここから解析に必要なROOTの知識を簡単に説明するが、すべてを説明することはできないためわからない部分は各自調べるかTAに質問したりするようにしてください。
 
 \subsubsection{ROOTとは}
-ROOTとはCERNが開発したデータ解析のためのフレームワークであり、特によく使われる目的としてはヒストグラム・グラフを描く、任意の関数でフィットする、大量のデータを処理するといったものがあります。物理学実験では大量のデータを扱うため、例えばエクセルのようなものではそれらのデータをプロットしたり複雑な解析を行うことは難しくなります。そのため、プログラミングによる解析を行えるようになる必要がある。言語としては主にC++で動作し、pythonで書くこともできるが自分がよく知らないため説明はC++のみとなる。また、ROOTで行えることは膨大であるため、できる限り今回必要となる最低限について説明するつもりだがわからない部分も出てくると思うので、それに関してはTAに聞いたり調べたりしてみてください。
+ROOTとはCERNが開発したデータ解析のためのフレームワークであり、特によく使われる目的としてはヒストグラム・グラフを描く、任意の関数でフィットする、大量のデータを処理するといったものがある。物理学実験では大量のデータを扱うため、例えばエクセルのようなものではそれらのデータをプロットしたり複雑な解析を行うことは難しくなる。そのため、プログラミングによる解析を行えるようになる必要がある。言語としては主にC++で動作し、pythonで書くこともできるが自分がよく知らないため説明はC++のみとなる。また、ROOTで行えることは膨大であるため、できる限り今回必要となる最低限について説明するつもりだがわからない部分も出てくると思うので、それに関してはTAに聞いたり調べたりしてみてください。
 ROOTをインストールもしくはROOTがインストールされているマシンにSSH接続して、ROOTを使用できる環境が構築できていることを仮定して、以下で使い方について説明する。
 
 \subsubsection{ROOTの起動方法}
@@ -241,7 +242,7 @@ rootを起動する際に、引数にrootファイルを指定することでroo
 \end{center}
 \end{figure}
 
-example.root内にさらにtreeという名前でtreeを作っている場合、tree-$>$''コマンド''という書き方をすることができる。それにより、簡単に測定データを確認したりヒストグラムを描くことができる。コマンドとしては例えば、tree-$>$Print()やtree-$>$Scan()があり、Printはデータの数や種類、変数の方を確認でき、Scanは1つ1つのデータを実際に確認することができる。
+example.root内にさらにtreeという名前でtreeを作っている場合、tree-$>$''コマンド''という書き方をすることができる。それにより、簡単に測定データを確認したりヒストグラムを描くことができる。コマンドとしては例えば、tree-$>$Print$\left(\right)$やtree-$>$Scan$\left(\right)$があり、Printはデータの数や種類、変数の方を確認でき、Scanは1つ1つのデータを実際に確認することができる。
 \begin{figure}[htbp]
 \begin{center}
   \begin{tabular}{c}
@@ -249,21 +250,21 @@ example.root内にさらにtreeという名前でtreeを作っている場合、
     \begin{minipage}{0.5\hsize}
       \begin{center}
         \includegraphics[clip, width=60mm]{SummerChallenge_tree_print.png}
-        \hspace{1.6cm} (a)tree-$>$Print()の実行例
+        \hspace{1.6cm} (a)tree-$>$Print$\left(\right)$の実行例
       \end{center}
     \end{minipage}
 
     \begin{minipage}{0.5\hsize}
       \begin{center}
         \includegraphics[clip, width=60mm]{SummerChallenge_tree_scan.png}
-        \hspace{1.6cm} (b)tree-$>$Scan()の実行例
+        \hspace{1.6cm} (b)tree-$>$Scan$\left(\right)$の実行例
       \end{center}
     \end{minipage}
   \end{tabular}
   \end{center}
 \end{figure}
 
-今回treeの中身をDrawやScanで確認すると、いくつかのBranchがあると思う\footnote{Branchとは言葉通り枝のようなもので、1つのEntryに対して様々なデータを詰め込むことができる。}。そのうち今回adcというBranchのヒストグラムを描きたい場合、tree-$>$Draw(''adc'')と打つだけでヒストグラムを描くことができる。\footnote{今回、EASIROCでは32chのデータが配列としてadcのBranchに入っており、そのうちMPPCがつながっているのは30chのみなので、adc[30]のみをDrawすることで測定データのヒストグラムを描ける}
+今回treeの中身をPrintやScanで確認すると、いくつかのBranchがあると思う。\footnote{Branchとは言葉通り枝のようなもので、1つのEntryに対して様々なデータを詰め込むことができる。}そのうち今回adcというBranchのヒストグラムを描きたい場合、tree-$>$Draw$\left(''adc''\right)$と打つだけでヒストグラムを描くことができる。\footnote{今回、EASIROCでは32chのデータが配列としてadcのBranchに入っており、そのうちMPPCがつながっているのは30chのみなので、adc[30]のみをDrawすることで測定データのヒストグラムを描ける}
 \begin{figure}[htbp]
 \begin{center}
   \begin{tabular}{c}
@@ -286,7 +287,18 @@ example.root内にさらにtreeという名前でtreeを作っている場合、
   \end{center}
 \end{figure}
 
-ヒストグラムを書くときに、ただそのまま書くだけでなく様々な条件をかけることもできる。例えば、tree-$>$Draw(''adc*2'')とすれば、adcの値を2倍したヒストグラムを描くことができ、tree-$>$Draw(''adc'',''adc$>$900'')とすればadcが900より大きいイベントのみ描くことができます。この条件には、ほかのBranchを用いることもできtree-$>$Draw(''adc',''adc\_l $>$ 1000 \&adc\_l $<$ 3000'')とすれば200$<$adc\_l$<$3000のみのヒストグラムを描くことができる。ただし、ある程度複雑な条件になってくるとこの書き方をするのは難しくなってくるので、後述するマクロを書いてヒストグラムを描くことをお勧めする。
+ヒストグラムを書くときに、ただそのまま書くだけでなく様々な条件をかけることもできる。例えば、tree-$>$Draw(''adc*2'')とすれば、adcの値を2倍したヒストグラムを描くことができ、tree-$>$Draw(''adc'',''adc>900'')とすればadcが900より大きいイベントのみ描くことができます。この条件には、ほかのBranchを用いることもできtree-$>$Draw(''adc'',''adc\_l $>$ 1000 \&adc\_l $<$ 3000'')とすれば1000$<$adc\_l$<$3000のみのヒストグラムを描くことができる。ただし、ある程度複雑な条件になってくるとこの書き方をするのは難しくなってくるので、後述するマクロを書いてヒストグラムを描くことをお勧めする。
+
+最後にtreeをそのままdrawする以外のヒストグラムの描き方として、Fillという方法がある。簡単な例として、自分でガウス分布に従う乱数を発生させてそれをヒストグラムに詰めるやり方を紹介する。
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
+    TH1D *h1 = new TH1D(''h1'',''h1'',50,-5,5);
+    for(Int_t i = 0;i < 10000;i++){
+     Double_t x = gRandom->Gaus();
+     h1->Fill(x);
+    }  
+    h1->Draw();
+ \end{lstlisting}
+ ３行目でgRandomというものを用いてGauss分布に従う乱数を発生させ、それを4行目でFillというコマンドでh1のヒストグラムに詰めている。それをfor文で回して10000回詰めている。このヒストグラムをDrawすることでGauss分布に従うヒストグラムを描くことができる。今回は例として乱数をFillしたが、乱数の代わりに詰めたい値を詰めることで好きなヒストグラムを描くことができる。
 
 \subsubsection{マクロの書き方}
 簡単なマクロはコマンドラインに書いてヒストグラムを描くときと同じものを描くだけでよい。ただし、rootファイルを読み込む際には必要な手順があるので例としてそれを示す。
@@ -297,7 +309,7 @@ void macro(){
 	h1->Draw();
 }
  \end{lstlisting}
-
+というファイルを作り、ターミナル上でroot macro.cxxやrootを起動した後、.x macro.cxxとコマンドすることでこのマクロを実行できる。
 データの解析には基本的にはROOT固有の知識はそれほど必要ではなく、c++の知識があれば充分であるため深くは説明しない。
 
 もう一つ必要な知識として、詳しい解析を行う際にはBranchのデータをヒストグラムとしてではなく値として取り出す必要がある。そのためこれも簡単にではあるが、値としての取り出し方を説明する。
@@ -405,16 +417,18 @@ tg1->Fit(''f1'','''','''',min,max);
 \begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
 TCanvas *c1 = new TCanvas(''c1'',''c1'',1600,900);
  \end{lstlisting}
-としてキャンバスを作っておき、ヒスとグラムやグラフをDrawした後に
+としてキャンバスを作っておき、ヒストグラムやグラフをDrawした後に
 \begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
 c1->SaveAs(''save name'');
  \end{lstlisting}
-とすることで保存することができる。保存する際にきれいにヒストグラムやグラフを整えた後、保存したい人も多いと思う。rootはヒストグラムやグラフそれぞれに様々な修飾等が存在し、それをここで説明しているときりがないため最後にそれらが書かれているリンクを載せておく。
+とすることで保存することができる。保存する際にきれいにヒストグラムやグラフを整えた後、保存したい人も多いと思う。rootはヒストグラムやグラフそれぞれに様々な修飾等が存在し、それをここで説明しているときりがないためまとめ\ref{sec:lastsection}にそれらが書かれているリンクを載せておく。
+
+また、ヒストグラムを保存する際に画像としてでなくrootファイルにヒストグラムのまま保存することができる。実際に触ってみないとそのメリットは感じにくいかもしれないが、rootファイルの状態で保存することで、保存した後にタイトルをつけたりbin幅を変えるといった加工が簡単に行える。そのため、最終的にスライド等に用いる時以外はrootファイルで保存しておいたほうが便利かもしれない。具体的なやり方が書かれているサイトのリンクをここに載せておく。\footnote{\url{https://www-he.scphys.kyoto-u.ac.jp/member/n.kamo/wiki/doku.php?id=study:software:root:io}のWrite ・オブジェクトをファイルに書き込む、rootファイルを保存するを参考にしてもらえばよい。}なお、ヒストグラム等を保存する際は測定データのrootファイルとは別に保存用のrootファイルを作るようにしてください。測定データを上書きしてしまうリスクを避けるために、測定データは読み込み専用で開く習慣をつけるためです。
 
 \subsection{Poisson統計}
 Poisson分布とはめったに起こらない事象を大量に測定した場合にこの分布に従うことが多い。式で表すと、
 \begin{equation}
-P(n)=\frac{\lambda^n e^{-\lambda}}{n!}
+P\left(n\right)=\frac{\lambda^n e^{-\lambda}}{n!}
 \end{equation}
 で、これは平均$\lambda$起こる事象がn回起こるときの確率を表す。今回の実験の場合はそれぞれの測定での光子数の分布はPoisson分布に従うと思われる。
 \begin{figure}[h]
@@ -442,6 +456,7 @@ $\lambda$が大きい場合はPoison分布はGauss分布(正規分布)に従う�
 また、演習３で光子数を減らした場合はフィットで平均光子数を求めることは難しい。その場合は平均光子数ではなく1光子以上のイベント数で考えるとよい。平均光子数そのものではないが、光子数が少ない場合には平均光子数に比例して1光子以上のイベント数も増加するため、それでも干渉縞を観測することができる。\footnote{物理的な説明をすると、1光子の干渉と仮定すると明線の部分では光子の存在確率が大きいため、光子を観測するイベント数が増加する。光子数が増加すると光子数0となるイベントは暗線であっても減少するため、この考え方で解析することは難しくなる。}
 
 \section{まとめ}
+\label{sec:lastsection}
 今回説明できたのはごく基本的な部分のみであり、今回の実験の解析についてもこれ以上の知識が必要になることがあると思う。c++の知識でわからないことがあれば
 
 \url{http://www7b.biglobe.ne.jp/~robe/cpphtml/}
