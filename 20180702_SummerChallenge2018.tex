@@ -60,7 +60,7 @@ E_j = E_0 \sin(\omega t - k r_j)
 \]
 と書ける。今、$E_0 \varpropto 1/{r_j}$なので、定数$C_0$を用いて
 \[
-E_j = \frac{C_0}{r_j} sin(\omega t - k r_j)
+E_j = \frac{C_0}{r_j} \sin(\omega t - k r_j)
 \]
 
 
@@ -106,41 +106,41 @@ r &=&r(0) + \frac{\partial r(0)}{\partial y} y + \frac{1}{2!} \frac{\partial^2 r
 \end{eqnarray*}
 となる。いま、$R \gg y$なので、第3項以降は無視できる。
 \[
-dE = C_0 \frac{sin(\omega t -k(R- ysin\theta ))}{R- ysin\theta} dy
+dE = C_0 \frac{\sin(\omega t -k(R- y\sin \theta ))}{R- y \sin\theta} dy
 \]
 これの分母は$R \gg y$より$R$としてよいので、
 \[
-dE = C_0 \frac{sin(\omega t -k(R- ysin\theta ))}{R} dy
+dE = C_0 \frac{\sin(\omega t -k(R- y\sin \theta ))}{R} dy
 \]
 これは、Rが十分大きいとき、$\theta$の全ての値に対して正しい。
 \begin{eqnarray*}
 E &=& C_L \int_{-D/2}^{D/2} \frac{\sin(\omega t - k( R - y\sin\theta ))}{R} dy \\
 %&=& \frac{C_L}{R} \int_{-D/2}^{D/2} sin(\omega t - k( R - ysin\theta )) \\
-&=& \frac{C_L}{R(kD/2)\sin\theta} \sin(\frac{kD}{2} sin\theta) sin(\omega t -kR) \\
-&=& \frac{C_L D}{R\beta} sin\beta \sin(\omega t - kR)
+&=& \frac{C_L}{R(kD/2)\sin\theta} \sin\left(\frac{kD}{2} \sin \theta \right) \sin(\omega t -kR) \\
+&=& \frac{C_L D}{R\beta} \sin \beta \sin(\omega t - kR)
 \end{eqnarray*}
-$\beta = \frac{kD}{2} \sin\theta$とすると、以上のようになり、線状光源が作る電場が導かれた。このとき、強度は$I(\theta) = <E^2>_T$で求められるので、
+$\beta = \frac{kD}{2} \sin\theta$とすると、以上のようになり、線状光源が作る電場が導かれた。このとき、強度は$I(\theta) = \langle E^2\rangle_T$で求められるので、
 \begin{eqnarray*}
-I(\theta) &=& < E^2>_T\\
-&=& <sin^2(\omega t - kR)>_T (\frac{C_L D}{E})^2 (\frac{sin\beta}{\beta})^2
+I(\theta) &=& \langle E^2 \rangle_T\\
+&=& \langle \sin^2(\omega t - kR)\rangle_T \left(\frac{C_L D}{E}\right)^2 \left(\frac{\sin\beta}{\beta}\right)^2
 \end{eqnarray*}
-$<E^2>_T$は$E^2$の十分に長い時間発展で、周期 $2\pi / \omega$とすると、
+$\langle E^2\rangle_T$は$E^2$の十分に長い時間発展で、周期 $2\pi / \omega$とすると、
 \begin{eqnarray*}
- <sin^2(\omega t - kR)>_T  &=& \frac{\omega}{2\pi} \int_{0}^{2\pi / \omega} \sin^2(\omega t - kR) dt \\
+ \langle \sin^2(\omega t - kR)\rangle_T  &=& \frac{\omega}{2\pi} \int_{0}^{2\pi / \omega} \sin^2(\omega t - kR) dt \\
  %&=& \frac{\omega}{2\pi} \int_{0}^{2\pi / \omega} \frac{1}{2} (1-cos(2(\omega t -kR))) dt \\
  &=& \frac{1}{2} 
  \end{eqnarray*}
  より、
 \[
-I(\theta) = \frac{1}{2} (\frac{C_L D}{R})^2 (\frac{sin \beta}{\beta})^2
+I(\theta) = \frac{1}{2} \left(\frac{C_L D}{R}\right)^2 \left(\frac{sin \beta}{\beta}\right)^2
 \]
 $I(0)$を求めると
 \[
-I(0) = \frac{1}{2} (\frac{C_L D}{R})^2
+I(0) = \frac{1}{2} \left(\frac{C_L D}{R}\right)^2
 \]
 なので、
 \[
-I(\theta) = I(\theta) (\frac{\sin \beta}{\beta})^2
+I(\theta) = I(\theta) \left(\frac{\sin \beta}{\beta}\right)^2
 \]
 と求まる。光の強度の変化と観測位置の関係は以下のように表される。\\
 
@@ -161,7 +161,7 @@ E &=& \frac{C_L}{R} \int_{-b/2}^{b/2} F(z) dz + \frac{C_L}{R'} \int_{a-b/2}^{a+b
 \end{eqnarray*}
 ここで、
 \begin{eqnarray*}
-F(z) &=& sin(\omega t - k(R-zsin\theta)) \\
+F(z) &=& \sin(\omega t - k(R-z\sin\theta)) \\
 \alpha &=& \frac{ka}{2} \sin\theta \\
 \beta &=& \frac{kb}{2} \sin\theta
 \end{eqnarray*}
@@ -169,9 +169,9 @@ F(z) &=& sin(\omega t - k(R-zsin\theta)) \\
 \[
 E = 2 \frac{C_L b}{R} \frac{\sin\beta}{\beta} \cos\alpha \sin(\omega t -kR + \alpha)
 \]
-であり、単スリットの時と同様に強度$I(\theta) = <E^2>_T$を求めると、$I(\theta) = \frac{1}{2} (\frac{C_L b}{R})^2$より
+であり、単スリットの時と同様に強度$I(\theta) = \langle E^2\rangle_T$を求めると、$I(\theta) = \frac{1}{2} (\frac{C_L b}{R})^2$より
 \[
-I(\theta) = 4I_0 (\frac{\sin \beta}{\beta})^2 \cos^2 \alpha
+I(\theta) = 4I_0 \left(\frac{\sin \beta}{\beta}\right)^2 \cos^2 \alpha
 \]
 となる。\\
 \\
