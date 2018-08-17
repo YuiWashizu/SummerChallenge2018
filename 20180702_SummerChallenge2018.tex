@@ -205,6 +205,7 @@ I(\theta) = 4I_0 (\frac{\sin \beta}{\beta})^2 \cos^2 \alpha
 \subsection{MPPC}
 MPPC(Micro Pixel Photon Counter)はAvalamche Photo Diode(APD)が多数配列された光検出器である。APDは半導体でできている。P型とN型、異なるドープ型の半導体にある向きで電圧をかけると、キャリアの少ない空乏層ができる。ここに光子が入射すると、光電効果で電子をはじき出す。電子は印加電圧によってエネルギーを持ち、さらに周囲の原子殻内電子をはじき出し、雪崩(Avalanche)的に電子を倍増する。印加電圧によって様々な倍増モードがあるが、MPPC内のAPDでは、十分な印加電圧をかけることで入射光子数によらない出力電流を得る(ガイガーモード)。このガイガーモードAPDが多数配列することにより、我々は光子が入射したAPDのチャンネル数だけを数えることで、(pile upはあるものの)光子数をデジタルに数えることができる。
 \begin{figure}[h]
+\begin{tabular}{ccc}
 \begin{minipage}[t]{0.33\hsize}
 \begin{center}
 \includegraphics[width=4cm]{mppc.jpg}
@@ -223,6 +224,7 @@ MPPC(Micro Pixel Photon Counter)はAvalamche Photo Diode(APD)が多数配列さ�
 \end{center}
 \caption{MPPCはAPDを並列に並べたもの}
 \end{minipage}
+\end{tabular}
 \end{figure}
 浜松ホトニクスのハンドブックに、詳細なMPPCの挙動が説明されている。\cite{hamamatsu}
 \subsection{EASIROC}
@@ -236,30 +238,32 @@ EASIROCチップは、Pre-Amp,Shaper,Discriminator,Capacitorからなる。Pre-A
 \end{figure}
 各デバイスを通った信号の出力波形は、EASIROCモジュールのProbe出力を観察するとわかる。Fast ShaperはSelf Trigger用なので、今回は(おそらく)使わない。Trigger信号に合わせてShaperの波高の一番高いところが読み出されているのがわかる。Trigger信号とShaperの立ち上がりがきちんと合うかどうかはケーブルの長さやDelayモジュールによって操作できる。
 \begin{figure}[h]
+\begin{tabular}{cccc}
 \begin{minipage}[t]{0.25\hsize}
 \begin{center}
-\includegraphics[width=3cm]{preamp.BMP}
+\includegraphics[width=4cm]{preamp.BMP}
 \end{center}
 \caption{Pre-Amp}
 \end{minipage}
 \begin{minipage}[t]{0.25\hsize}
 \begin{center}
-\includegraphics[width=3cm]{fastshaper.BMP}
+\includegraphics[width=4cm]{fastshaper.BMP}
 \end{center}
 \caption{Fast Shaper}
 \end{minipage}
 \begin{minipage}[t]{0.25\hsize}
 \begin{center}
-\includegraphics[width=3cm]{slowshaper.BMP}
+\includegraphics[width=4cm]{slowshaper.BMP}
 \end{center}
 \caption{Slow Shaper}
 \end{minipage}
 \begin{minipage}[t]{0.25\hsize}
 \begin{center}
-\includegraphics[width=3cm]{slowshaperhold.BMP}
+\includegraphics[width=4cm]{slowshaperhold.BMP}
 \end{center}
 \caption{holdしたSlow Shaper}
 \end{minipage}
+\end{tabular}
 \end{figure}
 \subsection{データ収集の方法}
 マニュアル参照
